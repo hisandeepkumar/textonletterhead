@@ -42,6 +42,39 @@
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 32px;
+      position: relative;
+    }
+
+    .app-card-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 16px 32px;
+      text-align: center;
+    }
+
+    .app-card-header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #f0f0f0;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .app-card-header h1 i {
+      color: #5b86e5;
+      font-size: 28px;
+    }
+
+    .app-content {
+      margin-top: 60px;
     }
 
     .app-section {
@@ -337,6 +370,15 @@
       .app-card {
         padding: 24px;
       }
+      .app-card-header {
+        padding: 12px 24px;
+      }
+      .app-card-header h1 {
+        font-size: 20px;
+      }
+      .app-content {
+        margin-top: 50px;
+      }
       .text-area-container {
         padding: 20px;
       }
@@ -364,82 +406,88 @@
 <body>
   <main class="container">
     <section class="app-card" aria-label="Text to PDF Generator">
-      <div class="app-section">
-        <h2 class="section-title">
-          <i class="fas fa-edit"></i>
-          Enter Your Document Content
-        </h2>
-        <div class="text-area-container">
-          <textarea id="contentInput" placeholder="Type or paste your document content here..." aria-label="Document content input"></textarea>
-          <div class="action-buttons">
-            <button class="btn" id="copyBtn" aria-label="Copy text">
-              <i class="fas fa-copy"></i>
-            </button>
-            <button class="btn" id="clearBtn" aria-label="Clear text">
-              <i class="fas fa-eraser"></i>
-            </button>
-            <button class="btn" id="pasteBtn" aria-label="Paste text">
-              <i class="fas fa-paste"></i>
-            </button>
-          </div>
-        </div>
+      <!-- Company Header at Top of Glass Card -->
+      <div class="app-card-header">
+        <h1><i class="fas fa-industry"></i> Myrtille Industries</h1>
       </div>
-      
-      <!-- Address Selector Section -->
-      <div class="app-section">
-        <div class="address-selector">
-          <div class="address-header">
-            <i class="fas fa-map-marker-alt"></i>
-            <h3>Select Address for Document</h3>
-          </div>
-          <div class="address-options">
-            <div class="address-option selected" id="oldAddressOption">
-              <h3><i class="fas fa-building"></i> Old Address</h3>
-              <p>92 SURAJ NAGAR (E)</p>
-              <p>CIVIL LINES SODALA</p>
-              <p>JAIPUR (RAJ)</p>
-              <div class="selected-indicator">
-                <i class="fas fa-check-circle"></i> Selected
-              </div>
-            </div>
-            <div class="address-option" id="newAddressOption">
-              <h3><i class="fas fa-home"></i> New Address</h3>
-              <p>Building No./Flat No.: PLOT NO 25</p>
-              <p>Road/Street: DEEPNAGAR, NEAR GUJAR KI THADI</p>
-              <p>City/Town/Village: Jaipur</p>
-              <p>District: Jaipur</p>
-              <p>State: Rajasthan</p>
-              <p>PIN Code: 302019</p>
-              <div class="selected-indicator">
-                <i class="fas fa-check-circle"></i> Selected
-              </div>
+
+      <div class="app-content">
+        <div class="app-section">
+          <h2 class="section-title">
+            <i class="fas fa-edit"></i>
+            Enter Your Document Content
+          </h2>
+          <div class="text-area-container">
+            <textarea id="contentInput" placeholder="Type or paste your document content here..." aria-label="Document content input"></textarea>
+            <div class="action-buttons">
+              <button class="btn" id="copyBtn" aria-label="Copy text">
+                <i class="fas fa-copy"></i>
+              </button>
+              <button class="btn" id="clearBtn" aria-label="Clear text">
+                <i class="fas fa-eraser"></i>
+              </button>
+              <button class="btn" id="pasteBtn" aria-label="Paste text">
+                <i class="fas fa-paste"></i>
+              </button>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="app-section" style="text-align: center;">
-        <button class="btn generate-btn" id="generateBtn" aria-label="Generate PDF Document">
-          <i class="fas fa-file-pdf"></i> Generate Document
-        </button>
-
-        <div class="status-area" id="statusArea" aria-live="polite">
-          <div class="status-header">
-            <i class="fas fa-cog fa-spin"></i>
-            <h3>Generating your document...</h3>
+        
+        <div class="app-section">
+          <div class="address-selector">
+            <div class="address-header">
+              <i class="fas fa-map-marker-alt"></i>
+              <h3>Select Address for Document</h3>
+            </div>
+            <div class="address-options">
+              <div class="address-option selected" id="oldAddressOption">
+                <h3><i class="fas fa-building"></i> Old Address</h3>
+                <p>92 SURAJ NAGAR (E)</p>
+                <p>CIVIL LINES SODALA</p>
+                <p>JAIPUR (RAJ)</p>
+                <div class="selected-indicator">
+                  <i class="fas fa-check-circle"></i> Selected
+                </div>
+              </div>
+              <div class="address-option" id="newAddressOption">
+                <h3><i class="fas fa-home"></i> New Address</h3>
+                <p>Building No./Flat No.: PLOT NO 25</p>
+                <p>Road/Street: DEEPNAGAR, NEAR GUJAR KI THADI</p>
+                <p>City/Town/Village: Jaipur</p>
+                <p>District: Jaipur</p>
+                <p>State: Rajasthan</p>
+                <p>PIN Code: 302019</p>
+                <div class="selected-indicator">
+                  <i class="fas fa-check-circle"></i> Selected
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="progress-container">
-            <div class="progress-bar" id="progressBar"></div>
-          </div>
-          <div class="status-message" id="statusMessage">Preparing PDF...</div>
         </div>
 
-        <div class="success-message" id="successMessage">
-          <i class="fas fa-check-circle"></i> Document generated successfully!
-        </div>
+        <div class="app-section" style="text-align: center;">
+          <button class="btn generate-btn" id="generateBtn" aria-label="Generate PDF Document">
+            <i class="fas fa-file-pdf"></i> Generate Document
+          </button>
 
-        <div class="error-message" id="errorMessage">
-          <i class="fas fa-exclamation-circle"></i> <span id="errorText">Error generating document</span>
+          <div class="status-area" id="statusArea" aria-live="polite">
+            <div class="status-header">
+              <i class="fas fa-cog fa-spin"></i>
+              <h3>Generating your document...</h3>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="status-message" id="statusMessage">Preparing PDF...</div>
+          </div>
+
+          <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> Document generated successfully!
+          </div>
+
+          <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle"></i> <span id="errorText">Error generating document</span>
+          </div>
         </div>
       </div>
     </section>
@@ -551,6 +599,24 @@
 
       // Generate PDF
       generateBtn.addEventListener('click', generatePDF);
+
+      // Function to format date with AM/PM
+      function getFormattedDateTime() {
+        const now = new Date();
+        const date = now.getDate();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const month = monthNames[now.getMonth()];
+        const year = now.getFullYear();
+        
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // Convert 0 to 12
+        const formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+        
+        return `${date}_${month}_${year}_${hours}_${formattedMinutes}${ampm}`;
+      }
 
       async function generatePDF() {
         const content = contentInput.value.trim();
@@ -684,7 +750,10 @@
 
           const finalPdfBytes = await finalPdf.save();
           const blob = new Blob([finalPdfBytes], { type: 'application/pdf' });
-          saveAs(blob, "Myrtille_Industries_Document.pdf");
+          
+          // Generate filename with date and time including AM/PM
+          const dateTimeStr = getFormattedDateTime();
+          saveAs(blob, `Myrtille_Industries_${dateTimeStr}.pdf`);
 
           statusMessage.textContent = "Document generated successfully!";
           progressBar.style.width = "100%";

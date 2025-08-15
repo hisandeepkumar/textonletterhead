@@ -102,6 +102,7 @@
       gap: 16px;
       margin-top: 16px;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -247,6 +248,87 @@
     .success-message i, .error-message i {
       margin-right: 8px;
     }
+    
+    /* Address selector styles */
+    .address-selector {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(16px);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .address-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .address-header i {
+      margin-right: 12px;
+      color: #5b86e5;
+      font-size: 20px;
+    }
+    
+    .address-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    
+    .address-option {
+      flex: 1;
+      min-width: 250px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .address-option:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-3px);
+    }
+    
+    .address-option.selected {
+      background: rgba(91, 134, 229, 0.25);
+      border-color: #5b86e5;
+      box-shadow: 0 0 15px rgba(91, 134, 229, 0.3);
+    }
+    
+    .address-option h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .address-option h3 i {
+      margin-right: 8px;
+      color: #5b86e5;
+    }
+    
+    .address-option p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 8px;
+    }
+    
+    .address-option .selected-indicator {
+      display: none;
+      text-align: right;
+      color: #5b86e5;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    
+    .address-option.selected .selected-indicator {
+      display: block;
+    }
 
     @media (max-width: 768px) {
       .container {
@@ -272,6 +354,10 @@
         flex-wrap: wrap;
         gap: 12px;
       }
+      
+      .address-option {
+        min-width: 100%;
+      }
     }
   </style>
 </head>
@@ -295,6 +381,39 @@
             <button class="btn" id="pasteBtn" aria-label="Paste text">
               <i class="fas fa-paste"></i>
             </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Address Selector Section -->
+      <div class="app-section">
+        <div class="address-selector">
+          <div class="address-header">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Select Address for Document</h3>
+          </div>
+          <div class="address-options">
+            <div class="address-option selected" id="oldAddressOption">
+              <h3><i class="fas fa-building"></i> Old Address</h3>
+              <p>92 SURAJ NAGAR (E)</p>
+              <p>CIVIL LINES SODALA</p>
+              <p>JAIPUR (RAJ)</p>
+              <div class="selected-indicator">
+                <i class="fas fa-check-circle"></i> Selected
+              </div>
+            </div>
+            <div class="address-option" id="newAddressOption">
+              <h3><i class="fas fa-home"></i> New Address</h3>
+              <p>Building No./Flat No.: PLOT NO 25</p>
+              <p>Road/Street: DEEPNAGAR, NEAR GUJAR KI THADI</p>
+              <p>City/Town/Village: Jaipur</p>
+              <p>District: Jaipur</p>
+              <p>State: Rajasthan</p>
+              <p>PIN Code: 302019</p>
+              <div class="selected-indicator">
+                <i class="fas fa-check-circle"></i> Selected
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -327,7 +446,6 @@
   </main>
 
   <script>
-    // JavaScript remains unchanged as per your request
     document.addEventListener('DOMContentLoaded', () => {
       const contentInput = document.getElementById('contentInput');
       const generateBtn = document.getElementById('generateBtn');
@@ -340,6 +458,57 @@
       const successMessage = document.getElementById('successMessage');
       const errorMessage = document.getElementById('errorMessage');
       const errorText = document.getElementById('errorText');
+      const oldAddressOption = document.getElementById('oldAddressOption');
+      const newAddressOption = document.getElementById('newAddressOption');
+      
+      // Address data
+      const addresses = {
+        old: {
+          address: [
+            "92 SURAJ NAGAR (E)",
+            "CIVIL LINES SODALA",
+            "JAIPUR (RAJ)"
+          ],
+          contact: [
+            "+91 9782099489",
+            "anilyadav.bme@gmail.com",
+            "GST: 08AMHPY5013C",
+            "URN-UDYAM-RJ-17-0084962"
+          ]
+        },
+        new: {
+          address: [
+            "Building No./Flat No.: PLOT NO 25",
+            "Road/Street: DEEPNAGAR, NEAR GUJAR KI THADI",
+            "City/Town/Village: Jaipur",
+            "District: Jaipur",
+            "State: Rajasthan",
+            "PIN Code: 302019"
+          ],
+          contact: [
+            "Mobile: +91 9782099489",
+            "Email: myrtilleindia@gmail.com",
+            "GST: 08AMHPY5013C1Z4",
+            "URN: UDYAM-RJ-17-0084962"
+          ]
+        }
+      };
+      
+      // Set default address
+      let selectedAddress = 'old';
+      
+      // Address selection logic
+      oldAddressOption.addEventListener('click', () => {
+        selectedAddress = 'old';
+        oldAddressOption.classList.add('selected');
+        newAddressOption.classList.remove('selected');
+      });
+      
+      newAddressOption.addEventListener('click', () => {
+        selectedAddress = 'new';
+        newAddressOption.classList.add('selected');
+        oldAddressOption.classList.remove('selected');
+      });
 
       // Dynamic textarea resizing
       function adjustTextareaHeight() {
@@ -412,6 +581,10 @@
           const lines = splitTextIntoLines(content, helveticaFont, 12, contentAreaWidth);
           const pages = groupLinesIntoPages(lines, helveticaFont, 12, contentAreaHeight);
 
+          // Get selected address info
+          const addressInfo = addresses[selectedAddress];
+          const isNewAddress = selectedAddress === 'new';
+          
           for (let pageIndex = 0; pageIndex < pages.length; pageIndex++) {
             const progress = 10 + (pageIndex / pages.length * 80);
             progressBar.style.width = `${progress}%`;
@@ -419,6 +592,7 @@
 
             const newPage = finalPdf.addPage([a4Width, a4Height]);
 
+            // Draw header
             newPage.drawRectangle({
               x: 0,
               y: a4Height - 75,
@@ -444,6 +618,7 @@
               color: PDFLib.rgb(0.8, 0.8, 0.8),
             });
 
+            // Draw footer
             newPage.drawRectangle({
               x: 0,
               y: 0,
@@ -459,43 +634,36 @@
               color: PDFLib.rgb(0.8, 0.8, 0.8),
             });
 
-            const addressLines = [
-              "92 SURAJ NAGAR (E)",
-              "CIVIL LINES SODALA",
-              "JAIPUR (RAJ)"
-            ];
-
-            let yPos = 85;
-            addressLines.forEach(line => {
+            // Draw address
+            let yPos = isNewAddress ? 90 : 85;
+            const addressFontSize = isNewAddress ? 9 : 10;
+            const addressLineSpacing = isNewAddress ? 10 : 14;
+            
+            addressInfo.address.forEach(line => {
               newPage.drawText(line, {
                 x: 40,
                 y: yPos,
-                size: 10,
+                size: addressFontSize,
                 color: PDFLib.rgb(0.102, 0.322, 0.463),
                 font: helveticaFont,
               });
-              yPos -= 14;
+              yPos -= addressLineSpacing;
             });
 
-            const contactLines = [
-              "+91 9782099489",
-              "anilyadav.bme@gmail.com",
-              "GST: 08AMHPY5013C",
-              "URN-UDYAM-RJ-17-0084962"
-            ];
-
-            yPos = 85;
-            contactLines.forEach(line => {
+            // Draw contact info
+            yPos = isNewAddress ? 90 : 85;
+            addressInfo.contact.forEach(line => {
               newPage.drawText(line, {
-                x: a4Width - 180,
+                x: a4Width - (isNewAddress ? 200 : 180),
                 y: yPos,
-                size: 10,
+                size: addressFontSize,
                 color: PDFLib.rgb(0.102, 0.322, 0.463),
                 font: helveticaFont,
               });
-              yPos -= 14;
+              yPos -= addressLineSpacing;
             });
 
+            // Draw main content
             const pageLines = pages[pageIndex];
             let contentY = a4Height - 75 - 20;
 
